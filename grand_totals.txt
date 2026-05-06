@@ -1,0 +1,7 @@
+--- FINAL PORTFOLIO TOTALS (Dec 30, 2014) ---
+Total Invested Quantity: 765 Shares
+Total Invested Cash:     NPR 299,940.00
+Remaining Unspent Cash:  NPR 60.00
+Market Value of Shares:  NPR 578,235.00
+TOTAL PORTFOLIO VALUE:   NPR 578,295.00
+TOTAL PROFIT/LOSS:       NPR 278,295.00 (92.77%)
