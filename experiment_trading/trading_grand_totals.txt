@@ -1,0 +1,8 @@
+--- 10-YEAR TRADING SIMULATION TOTALS (2015-2025) ---
+Initial Investment (2014): NPR 299,940.00
+Final Portfolio Value (2025): NPR 1,326,940.00
+  - Final Stock Value:      NPR 299,504.30
+  - Final Cash Balance:     NPR 1,027,435.70
+--------------------------------------------------
+TOTAL NET PROFIT:           NPR 1,027,000.00
+TOTAL RETURN PERCENTAGE:    342.40%

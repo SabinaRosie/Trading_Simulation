@@ -13,7 +13,7 @@ def calculate_sma(history, current_date_str, window=20):
     return sum(past_prices[-window:]) / window
 
 def run_simulation():
-    stocks_dir = r'c:\Users\PS\Desktop\Sabina_Trading\stocks'
+    stocks_dir = '../stocks'
     total_budget = 300000
     start_date = datetime(2013, 1, 1)
     end_date = datetime(2014, 12, 30)
@@ -26,6 +26,7 @@ def run_simulation():
         symbol = filename.replace('.csv', '')
         stocks_history[symbol] = []
         stocks_data_map[symbol] = {}
+        
         filepath = os.path.join(stocks_dir, filename)
         with open(filepath, mode='r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
@@ -138,6 +139,15 @@ def run_simulation():
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(transactions)
+        
+        # Add Grand Total row
+        writer.writerow({
+            'Stock': 'GRAND TOTAL',
+            'Buy_Date': '',
+            'Buy_Price': '',
+            'Quantity': total_shares_purchased,
+            'Invested_Amount': total_invested
+        })
 
     # --- SAVE FILE 2: STOCK-WISE SUMMARY (CSV) ---
     with open('stock_wise_summary.csv', mode='w', newline='', encoding='utf-8') as f:
@@ -145,6 +155,9 @@ def run_simulation():
         writer.writerow(['Stock Name', 'Total Quantity', 'Avg Buy Price', 'Total Invested'])
         for s in stock_summaries:
             writer.writerow([s['Stock'], s['Total_Quantity'], f"{s['Avg_Price']:.2f}", f"{s['Total_Invested']:.2f}"])
+        
+        # Add Grand Total row
+        writer.writerow(['GRAND TOTAL', total_shares_purchased, '', f"{total_invested:.2f}"])
 
     # --- SAVE FILE 3: GRAND TOTALS (TXT) ---
     with open('grand_totals.txt', mode='w', encoding='utf-8') as f:
