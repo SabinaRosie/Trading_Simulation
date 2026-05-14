@@ -138,7 +138,7 @@ def simulate():
                 elif price < sma20 * (1 - DIP_BUYING_THRESHOLD):
                     action, reason = "BUY", f"Price dropped {DIP_BUYING_THRESHOLD*100:.0f}% below SMA; dip buying opportunity detected."
                 elif ret5d > MOMENTUM_BREAKOUT_THRESHOLD:
-                    action, reason = "BUY", f"Strong upward trend confirmed (5-day return: {ret5d*100:.2f}%)."
+                    action, reason = "BUY", f"Strong upward trend continuation confirmed (5-day return: {ret5d*100:.2f}%)."
 
                 if action == "BUY":
                     invest_amt = min(cash * 0.1, 50000)
