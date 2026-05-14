@@ -148,13 +148,13 @@ def build_comparison():
         'Initial_Value': round(init_cash, 2),
         f'{DATE_STR} Qty': 0,
         f'{DATE_STR} Price': 0,
-        f'{DATE_STR} Value': round(final_cash_sim, 2)
+        f'{DATE_STR} Value': round(final_cash_sim + total_sim_val, 2)
     }
     records.append(cash_row)
     
-    # Adjust totals to include cash
-    total_init_val += init_cash
-    total_sim_val += final_cash_sim
+    # Final total calculation (Stocks + Cash)
+    final_total_val = total_sim_val + final_cash_sim
+    total_init_val_with_cash = total_init_val + init_cash
 
     # Create DataFrame and add Total row
     comparison_df = pd.DataFrame(records)
@@ -163,23 +163,21 @@ def build_comparison():
         'Initial_Buy_Date': '-',
         'Initial_Qty': comparison_df['Initial_Qty'].sum(),
         'Initial_Price': '',
-        'Initial_Value': round(total_init_val, 2),
+        'Initial_Value': round(total_init_val_with_cash, 2),
         f'{DATE_STR} Qty': comparison_df[f'{DATE_STR} Qty'].sum(),
         f'{DATE_STR} Price': '',
-        f'{DATE_STR} Value': round(total_sim_val, 2)
+        f'{DATE_STR} Value': round(final_total_val, 2)
     }
     
     comparison_df = pd.concat([comparison_df, pd.DataFrame([summary_row])], ignore_index=True)
     comparison_df.to_csv(COMPARISON_OUTPUT, index=False)
     
     # Calculate Results
-    final_total_val = total_sim_val # Already includes cash from line 155
-    total_profit = final_total_val - total_init_val
-    return_pct = (total_profit / total_init_val) * 100 if total_init_val > 0 else 0
+    total_profit = final_total_val - total_init_val_with_cash
+    return_pct = (total_profit / total_init_val_with_cash) * 100 if total_init_val_with_cash > 0 else 0
 
     print("\n--- PORTFOLIO COMPARISON SUMMARY (2015-2025) ---")
-    print(f"Total Initial Cost:      NPR {total_init_val:,.2f}")
-    print(f"Simulation Stock Value:  NPR {total_sim_val - final_cash_sim:,.2f}")
+    print(f"Total Initial Cost:      NPR {total_init_val_with_cash:,.2f}")
     print(f"Simulation Final Cash:   NPR {final_cash_sim:,.2f}")
     print(f"TOTAL SIMULATION VALUE:  NPR {final_total_val:,.2f}")
     
